@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 .env
 page_dump.html
+browser_data/
