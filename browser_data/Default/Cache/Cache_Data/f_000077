@@ -1,0 +1,227 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="google-site-verification" content="DvYvopKyy2XeM3XeGHSq0Vq5byC57qVXIRT7ggK1tsw" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>T.C.Millî Eğitim Bakanlığı</title>
+    <link rel="stylesheet" type="text/css" href="cssyeni/bootstrapyeni.min.css">
+    <link rel="stylesheet" type="text/css" href="cssyeni/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="cssyeni/iofrm-style.css">
+    <link rel="stylesheet" type="text/css" href="cssyeni/iofrm-theme9.css">
+    <link rel="stylesheet" type="text/css" href="cssyeni/jquery.mmenu.all.css">
+    <link rel="stylesheet" type="text/css" href="cssyeni/loginstyle.css?v=1.0">
+</head>
+<body>
+    <!-- The menu -->
+    <nav id="menu">
+        <ul>
+            <li><a href="">MEB E-OKUL VBS</a>
+                <ul>
+                    <li><a href="https://play.google.com/store/apps/details?id=com.meb.vbsmobil">Android</a></li>
+                    <li><a href="https://itunes.apple.com/tr/app/meb-e-okul-vbs/id839482639?mt=8">iOS</a></li>
+                </ul>
+            </li>
+            <li><a href="">MEB E-OKUL</a>
+                <ul>
+                    <li><a href="https://play.google.com/store/apps/details?id=com.meb.e_okul">Android</a></li>
+                    <li><a href="https://itunes.apple.com/tr/app/meb-e-okul/id982521746?mt=8">iOS</a></li>
+                </ul>
+            </li>        
+            <li><a href="">Açık Öğretim Liseleri</a>
+                <ul>
+                    <li><a href="https://play.google.com/store/apps/details?id=com.meb.acikLise">Android</a></li>
+                    <li><a href="https://itunes.apple.com/tr/app/meb-personel/id661164713?mt=8">iOS</a></li>
+                </ul>
+            </li>
+            <li><a href="">MEB BİLSEM</a>
+                <ul>
+                    <li><a href="https://play.google.com/store/apps/details?id=air.meb.bilsemdemo">Android</a></li>
+                    <li><a href="https://itunes.apple.com/tr/app/bilsem-tan%C4%B1t%C4%B1m/id1303486851?mt=8">iOS</a></li>
+                </ul>
+            </li>
+            <li><a href="">MEB AJANDA</a>
+                <ul>
+                    <li><a href="http://play.google.com/store/apps/details?id=com.meb.mebanahtar">Android</a></li>
+                    <li><a href="https://itunes.apple.com/us/app/meb-anahtar/id1448478630?mt=8">iOS</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+    <a href="#menu" id="menuButton" style=""><i class="fa fa-bars" aria-hidden="true"></i>
+    </a>
+    <div class="form-body">
+        <div class="row">
+            <div class="img-holder">
+                <div class="info-holder">
+                    <h3>T.C.
+                          <br>
+                        Millî Eğitim Bakanlığı
+                    <br />
+                        Bilişim Sistemleri
+                    <br />
+                        MEBBİS</h3>
+                    <p>Bakanlığımıza ait uygulamalara tek bir kullanıcı ile erişim sağlayabilirsiniz.</p>
+                    <div class="LeftImage">
+                        <img src="images/giris.png" alt="">
+                        <a href="javascript:void(0)" class="btn1" data-toggle="tooltip" data-placement="top" title="DYS"></a>
+                        <a href="javascript:void(0)" class="btn2" data-toggle="tooltip" data-placement="top" title="E-OKUL"></a>
+                        <a href="javascript:void(0)" class="btn3" data-toggle="tooltip" data-placement="top" title="MEBBİS"></a>
+                    </div>
+                    <div class="mobile-apps">
+                        <ul>
+                            <li><a href="https://play.google.com/store/apps/developer?id=T.C.+Milli+E%C4%9Fitim+Bakanl%C4%B1%C4%9F%C4%B1" target="_blank">
+                                <img src="images/uygulamaikon/gp.png"></a></li>
+                            <li><a href="https://itunes.apple.com/tr/developer/t-c-milli-egitim-bakanlig%C4%B1/id656664734?l=tr" target="_blank">
+                                <img src="images/uygulamaikon/ios.png"></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="form-holder">
+                <div class="form-content" id="particles-js">
+                    <div class="form-items">
+                        <div class>
+                            <a href="https://www.meb.gov.tr"  target="_blank">
+                            <img src="images/logo-beyaz.png" alt="logo" class="img-fluid" />
+                                </a>
+                        </div>
+                        <form method="post" action="./" id="ctl00" class="form-">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATEFIELDCOUNT" id="__VIEWSTATEFIELDCOUNT" value="6" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="wTU8oBSV4D7KMVqLIw52RuUHn145ZcTFaino0vSCcuCWMfEIbL3FhAXDqTebcifF+ZDGziud/f9rAXyXbTLkeRxF2fOVzFiRW8dNDa7G+hRpajySi4ofEv3np6tdt2lQxnx70zmpOq2PInYRcBJMc//2enYdeQz0Xf7Xskm7LyeN1Mk/4ocYh3FIuR59oFKsz1zYQcRi+In3Zy/o2m7/5/NB5RfY5PjI/3EuO5hjPy/CLmHqW25m2s7t0ZARPzsr67U9+ok51S2cI72pBFSqeTXpjcz279/KEz8+KuNvAvEcXTp8/8N06HWt/jCaqESHM7oRkjlgl5lEd0Lai8a6beXOB14XakXGy1btIYb9CGFBYPbD8Qn9gll1eO3AOmQ7jSadg7T0CrYQYV1eeRfHm0K081mL+Qzka8uSF+mMr0KWBvmDdb2XBQ50RWc50Iq1KLxbkXyinR5J7zVLzFfKeujY9lgNhcg6pCExB4M0ZzeLgAHPReXlQLQVZjFLMmON53iHXaoiFp4092dRBsSQWTYNrolSQsRdvyWc6pT+Ei3KJKuOKnoLQajRmFseeadrZCUN44flzU4wRy9qJcHAhskukdrem4XXF0PjcLq82oDmsE7/kPLXBTNJ9y550B2Nn9YymWhQq1Sb+PufRPewfLjzrhGvnXK/diLRGZd/F4ov6MwG4KDYuJUpwirXhbAqLUkQb+9D563hkuKISQ12OZ3AzAeyWKfnI0nqa3DvwJaNAz66C2D07n5qf0ssCl950W1RZusK+1p/+CRFMn+HWvKRpXa9IMiRusA9/7rqRuxigsfuGPbD3v9Som/kTygcQe7fJOgB4ND1Olzt2Ffzhmf0DSBiqLPPDNW/lH0vX6gWVVF/qvGMpy7nsNopltDe9gBximKzfcbdzTAd0j3/3fX8QfCZXx4LfSbOnM+avUHeId+BSgh/UGohxbKrjSgBJ1mrnLULKc10jaNyT8u3kW2kCqN+gYs+FwpzdFTNswN5dBEeNby23STjlFuBOmAW" />
+<input type="hidden" name="__VIEWSTATE1" id="__VIEWSTATE1" value="soxW8iow9G9xPByRhkmwnV50pM0lt6mCikpQ+RVm3jgrR4MkkKjvlCQ9lWCftbSiYu1VaLM1POFMtrgy2F+un63H9n3XZNHBev9kASTtHYnvR1hmYeeBEOJRes8TfGQq+pa+TzZ9nm4LzSEaEfTv1Gu4wsyT1yN04JokVSUFekhRodr2m+D07Fpu0/u90Z2ZiWlV5vFSeq8cXM7+V7IwyIit9x7Daz1t0iK+iE7bEEl0KhxWpk0ojszlsId8077O5ikuuFlbIOJiBuohSmnmXS9ru1r/9gYY5Dx9zcYMGcrvl8Cn9jC+D50YL4icrwsFUrqUuJue+5ZOUdmIve2b/8Dy7P0F1OCzyl1BLjMoCz4TmWyXDpIahyBn4wL8eL7+p7Xa/SMcAjnmXxFtzopulPmeSQwqVcJD0EwTYAWsVSgnlLgPhmXRel5J7nfAm8lZf3vnFGN0pAWBjgN1CvmsaX0Fsu42kOHW7qm2yvXiCM8E+tKBrNRjZGOb6Iiw1BBxMBDCIEqCjdPw+s4ZrIh2LFM4c66foVkXSuQ4Mtdvz0WHOgCsolJAJwsWUzsQzypLavsjZERijkU163GeCFj+cRxBGu8yppV51n8RQIlyR1PJLfzGZoFBLLLIuL7GhFrQM2MOO/DHFZAknGgr8Kj9cuma4O7TPGaq04Ctd8jDMo6mkvKuzEnE9SgD9f0p4TmdL6B1uHWgnpXG8ilNUEkPkDb5vutOFty2CRr/1Ve4F0+CUJdC5Z1/BFu8K6b2EsvLnjF5ZOSfsxlnAzLDIylWek0/PT8c8fI1kZcHPWLrW1NVtxgHKdG1+h2a68zV/1Zy/PpLj10Io6zcEfxgASquVTFVs8DbMDFFssVwI6DIU4R5w7+ZTBVvoocmNDDXzcc+JDiiHBCTKEydcC6P+HZ/bpgiemki9iQ64fAw+6KSjXXDr7kpJ8sPhzjWpvLty3FkrzKCP/K88ofvYBVB4xxMkLBL2MByGejdLT9YgBuqzDsfZN06VdkyDwY/AGY7tz83" />
+<input type="hidden" name="__VIEWSTATE2" id="__VIEWSTATE2" value="NUMzXz/0ifs1o72msKBISUrWop9PxQLpWQq8WkYg6kedCGkpd3KFIdzzb5LRpEHAQLOAB8emJ4gysJ1tkJC82RGagyQyQm7/atlK/KBaFOZ8FlqmyG0XljoVjI8Om1WIyutNZCljITRcf1EGJd/k75qo8sUo1UfbeUkQShRAS5brtUd6JobyTzN8pJJHZca/QpHyAKXDtibdfShpw+UID4Z1uD8ray3VA1bE9zW7alcauSy0t/2+v6MaZAsVBNsLlEB7EOKKYAlAIZWQMdgicgSZkofY38/ag0dj4AqKT3ONxj1FIVCrZY6VX9714HTb7BN7u8+fRXOqtZujGNTB7ByTkAN1sPXx7jFq7svaTxZCjM4KvpYOnqk9wJ0ejZFA6Qmf65S3qACSSJQdbPdy4eq+ca62nI/WJIkVtSyf00BqlxHmUYBdSlKZsW0avot7P/jdac7j3TgVDS9y91xVmNHA36s/HQWBK5ch3Ev4Vw1PHPzH1PsfnkJjvZoVZnzhBCxtGAwVh5UBcC0VPs7XUDpjzyV5TTGqr8YcBiZ8Dv7SCRX6J1wQCwzhXVXlbubKN/7A2MLbX56j/KL7L9+duUUKSQ3MO2UICm7J0p5kz6rCZLaGqC3eFUA/6fEiXMwvUV6SJmgr56ZLiy5UhqwfkaUzCG/i+kevKuZU1N7dZQkE07dAx0m7/rxz8e7kwLEw416s+QUDTI7xo9SbUGYHtxIxDYlM/nKOcfkbcy0XgH6707qdQxSiAEUeZ7vkEYqgVBc8uTfvKxnEIm5W3wkyFSiWgbdBv63UIAZ63a06JhDIrRy3w+EefNs+kOcLBFMzRUwM9OnpU3x+T3H9CwJIWTgBggfYvTYSzGMgGY2FxcaMlN3UdnkSNqtlpTAUz7dfP/v32yon8ryACcF4oxR+2tlNfLe1R496Iiu3ERrtnmVeCDfyzgzU8Awx55XP9h4xwCWqYLNSza4bwv4v0Eh57qUE/1O2qBrSM0r0y+jQrYPjds0HjOAO6OzYBtuZ+FDr" />
+<input type="hidden" name="__VIEWSTATE3" id="__VIEWSTATE3" value="lZ3Ll9BC2k8nrxnh4dUcarrQzr4+hpWqERMT2iZw7kbxJEifsPfOyGKux/j94BnUgJbLutScVCdGTZBkCv8fQ9SOjAMr5pGRyhyl676ZfeXAq0lhOgRvaOx0Lti5cWtcc7iOi+SwNKLXl77dOqUkbRm9UqJKmETeSJFY8U7ag50PuNRDzKmouWVdksFP0Aak18LtOWlqzrGD9dW+0EsTMG8Hufb+zFr9mdq2EW6cOgD6QqCPJHAs+R3y7USJDz6BC9/vFD3S6vM3ICrKIMEwtJwSXN6NeS3e+hITpIO0+IGPEARuFoAdYKGp1tj78V6C9BLepGnLPM/H7rnTWsxTg+IrdlMRizIVDWBIgrkjxls297l6w9GgkIJ+KHwLeN3hEnl6RfAyPjc+Xxzv/JM/Cd3uosyjUGZl/MYoE8+BwrbHLj/89pHgKWicGmjQFPid178QjWTO5tKrcjom3ofowfcRY6kWTArhdmVwk4rSO/CvL/mWuCrGGpX+NbzQOACqWI2VKScwj3W/kVhv3X26OprpvCvnSlrIhUp/9zvJiqREBA3J1LK4NrMA+RT7d5xN0ZCqY8H0RumErOZGKNkZ+ErfvDdsofbaFQNjiTWNv3Rd/5uc7fFWvPtW2471RfkCRu9/flgVTfdcNW7lLDahGzxgsB6MZi1e0QjENHTEutGnAgxqBzNJVoBKzDKnSwktaBI++WVed07Z5UO4TiFOMhnVgoElKhg1hXbDZT38sZtgGUS+sPAKaR67r6CCPRfYORoc6TILu4or3+5SAjP/p52EA8/bxM+YaVFPtTS9s0FresJ49dvRuX1s6orvfPZa6aVypZR1fzjHBXZDQ8JC3yzSVqzLx1viubw+DAFDdh8nHI+Y9BWWDJZVissHA47KIDGHRtbUPkW4VjqSQSFUNQ5hxP+dHbtkg1ZUpo95aiaTYeFMXgeTUwbEoGbVg2/py+C333MhGCFwA3/Tgnf4h7x2yA4bBklN3wEKWQ76JzN+YYoek4GlxklceUXgirEh" />
+<input type="hidden" name="__VIEWSTATE4" id="__VIEWSTATE4" value="UMbfswTnJQCA9DqIPLrZ0iKQJ5msX8V11yGU0E7g9ennSz0gkQBY4moD8s7yP4ynAM8GEvgcIbVLG7kBmnc9w3GTFS2aJ4+ilpdigDLu1YzGkPDYwEckydDYHau3w4ceNoDATmCor0OTEDTIXKNswvQ+qpUacbPmq2WQMx2qOT3gAKpBf6SCbdag6gpxM3qiuBw8GTGkdGLS1cWGU/aWUGFyUSfLstUW0MzsI+OzsDnRCxyn2Zs31IL/fyK82G2C5CgTMuhvqzU71hdgMWJHXwaA+n1g1LzpScmWvxWgWmTGl9jzHr+d38dfPdYFibde5dLheYcM4fV3+BHYJLQ0lD1+ipNq71Jeu9yhWNPeNJAgDmHToM1EJpPHNJ2v2M/TCIPx428ZnIwTS27ILoW5gb8h+9L8ERLukRkPucV7vJuy9FWhL6GlrVih/xyX3iCj6QDfIM7+pYZXc0fEWN2LIBMjfPtESC53ik4cB6Ryg9OTRKhAWyyjjds1p5M9cNF+Pl2Ew/kHUezWX5qRK++FvWGfakiMezoERqbO6SYuypjf+BoVx/8WysyO7ggZAO00/0/PWOORGiOIUIzVfgfoytSSp/gYP90NDbqCGin2HcnvbR5SSVc6uDxgdhpMR4W6HHV1o9cDzMw5XD779BjcPd9hguM4FXVD56bsI58pNNlOLQLRjphCckCuNcyr2BWF6UzceukjrtvGR/qfCdRBLrP6Ksk2Mcu+XYYbksDnvWItd8P5E8iLAtiW4XbII4vkxV1EfkC8xOmIovz+zvSN5HHDkgfkS2Cjm94c4lQBohd8AsanHwfnaJZNC46PZFCBhxvHvMsVhZZ+BbxkaQQRzecqLt/E3vja4PSsB4FZPxtjr5qCC6RgAdT37HhQaoCfDoEqEhlmfbdFyzkRo1sq2+53XritChxF86E7dO1tJ3XfN1/UwDOUznK/+tZiJweUVtlWTnxYUQe26VDzSbDe3XYrzkT2cRSZh2BtoiT2GEA/rrwlfRxJSK7L8PHj+YvA" />
+<input type="hidden" name="__VIEWSTATE5" id="__VIEWSTATE5" value="iPGL1PMfGSGpKkz72nRefeNc0C+Q+RFnZGhUUp2tzz+EOPDFktQIcLn4OvWQNC1OyuI+ND6omAFe1nqGHQVaUrEXST8Kh2PjEz6Gh8FntbJiaPPAWjvMpgU8aV8+AauG" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['ctl00'];
+if (!theForm) {
+    theForm = document.ctl00;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="CA0B0334" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="QR3pw9n7yMT2YKqXxcsCzRfB8cpWl6PoMXUi4hejmicwBMRbu9R5LB3L1QOJHJYeH3KFqEx4a8PoCwq93t/FTUTarDs2zdVq6yec18Av+hZnOvXXqX6II4Kl+YgnxggkVmTfhxMYqPKMcekrodPZfwRn8hRdC0NNzusHDW4cqv8VGludlLGBZr06U8Qv57am" />
+</div>
+                              <input name="__RequestVerificationToken" type="hidden" value="jelt97DaO6_852YXMkerPQdDkNfv7aCjdLu1lFRJBHXysaqADNPnqy0iebGbRrNDzWfERISdiG6dzNWmMb6Fps81KMiFFkoLVKGTMCugq1k1" />
+                            <div id="pnlLogin">
+	
+                                
+
+                                <div id="sesler" style="visibility: hidden">
+                                    <audio id='aPlayer' controls hidden>
+                                        <source src='/soundogg.aspx?dc=349' type='audio/ogg'>
+                                        <source src='/soundmp3.aspx?dc=349' type='audio/mpeg'></audio>
+                                    <script>
+                                        function ses() {
+                                            var aPlayer0 = document.getElementById('aPlayer');
+                                            aPlayer.load();
+                                            aPlayer.play();
+                                        }
+                                    </script>
+                                </div>
+                                <div class="form-group">
+                                   <a href ="#" alt="jfg">
+                                        
+                                       <br/>
+                                       
+                                       </a>
+                                    
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="txtKullaniciAdIcon"><i class="fa fa-user" aria-hidden="true"></i></span>
+                                    </div>
+                                    <input name="txtKullaniciAd" type="text" maxlength="20" id="txtKullaniciAd" class="form-control" placeholder="Kullanıcı Adı / T.C. Kimlik No" required="required" />
+                                </div>
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="txtSifreIcon"><i class="fa fa-lock" aria-hidden="true"></i></span>
+                                    </div>
+                                    <input name="txtSifre" type="password" id="txtSifre" class="form-control" placeholder="Şifre" required="required" />
+                                </div>
+                                <div class="form-button">
+                                    <input type="submit" name="btnGiris" value="Giriş" id="btnGiris" type="submit" class="ibtn float-right  text-center btnSubmit" value="Giriş" style="width: 50%" />
+                                    
+                                    
+                                    <a id="edevletlink" class="ibtn float-left text-center" href="mebbisedevlet.aspx" style="padding: 6px 10px"> e-Devlet Girişi </a>
+
+                                    <div class="SifremiUnuttum">
+                                        <a id="lnkQrcode" class="pull-left text-white" href="javascript:__doPostBack(&#39;lnkQrcode&#39;,&#39;&#39;)">Karekod ile Giriş</a>
+                                        <a href="https://mebbis.meb.gov.tr/sifrehatirlat.aspx" id="sifrehatirlatlink" class="pull-right text-white">Şifremi Unuttum?</a>
+                                    </div>
+                                </div>
+                            
+</div>
+                            
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    
+    <script type="text/javascript" src="js/popper.min.js"></script>
+
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script src="ESorusturmaYeni/AdminLTE/plugins/input-mask/jquery.inputmask.js"></script>
+    <script src="ESorusturmaYeni/AdminLTE/plugins/input-mask/jquery.inputmask.numeric.extensions.js"></script>
+    <script type="text/javascript" src="js/particles.min.js"></script>
+    <script type="text/javascript" src="js/jquery.mmenu.all.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+    <script>
+        $(function () {
+            $("#menu").mmenu({
+                navbar: {
+                    title: "Mobil Uygulamalar"
+                }
+            });
+
+            $("#txtDogrulamaKodu").inputmask({ mask: "9 9 9 9 9 9" });
+
+
+        });
+    </script>
+    <div class='modal' id='myModalQrcode'>
+                                <div class='modal-dialog'>
+                                  <div class='modal-content'>
+                                    <div class='modal-header'>
+                                      <h4 class='modal-title'>T.C. Milli Eğitim Bakanlığı</h4>
+                                      <button type='button' class='close' data-dismiss='modal'>&times;</button>
+                                    </div>
+                                    <div class='modal-body'>
+                                        <p> Karekodu MEB Ajanda uygulamasına okutunuz.</p>
+                                      <iframe style='border: none;width: 250px;height: 250px;' src='https://mebasistan.meb.gov.tr/QRLogin/' ></iframe>
+                                    </div
+                                    <div class='modal-footer'>
+                                      <button type='button' class='btn btn-danger' data-dismiss='modal'>Kapat</button>
+                                    </div>
+        
+                                  </div>
+                                </div>
+                              </div>
+                                <script>$('#myModalQrcode').modal()</script>
+                            
+</body>
+</html>

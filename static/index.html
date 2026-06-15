@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="E-Okul Gelişim Düzeyleri Girişi Otomasyon Aracı - Toplu kazanım girişi">
+    <title>E-Okul Gelişim Düzeyleri Girişi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <!-- Animated background particles -->
+    <div class="bg-particles" id="bgParticles"></div>
+
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-content">
+                <div class="logo-area">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h1>Gelişim Düzeyleri Girişi</h1>
+                        <p class="header-subtitle">E-Okul Toplu Kazanım Otomasyon Aracı</p>
+                    </div>
+                </div>
+                <div class="status-badge" id="statusBadge">
+                    <span class="status-dot"></span>
+                    <span class="status-text">Bağlantı Bekleniyor</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Step Indicator -->
+            <div class="step-indicator">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-label">Tarayıcı</div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-label">Sayfa</div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-label">Seçim</div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="4">
+                    <div class="step-number">4</div>
+                    <div class="step-label">Kazanım</div>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" data-step="5">
+                    <div class="step-number">5</div>
+                    <div class="step-label">Uygula</div>
+                </div>
+            </div>
+
+            <!-- Step 1: Browser -->
+            <section class="card step-card" id="step1Card">
+                <div class="card-header">
+                    <div class="card-icon browser-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="3" width="20" height="18" rx="2"/>
+                            <line x1="2" y1="9" x2="22" y2="9"/>
+                            <circle cx="6" cy="6" r="1" fill="currentColor"/>
+                            <circle cx="10" cy="6" r="1" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Tarayıcıyı Başlat</h2>
+                        <p>Chromium tarayıcısı açılacak. e-Okul'a giriş yapın.</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-primary btn-lg pulse-btn" id="btnStartBrowser" onclick="startBrowser()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5 3 19 12 5 21 5 3"/>
+                        </svg>
+                        Tarayıcıyı Aç
+                    </button>
+                    <p class="info-text" id="browserInfo">Tarayıcı açıldıktan sonra e-Okul'a giriş yapıp aşağıdaki butonla devam edin.</p>
+                </div>
+            </section>
+
+            <!-- Step 2: Navigate -->
+            <section class="card step-card hidden" id="step2Card">
+                <div class="card-header">
+                    <div class="card-icon navigate-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 12h18M13 6l6 6-6 6"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Gelişim Sayfasına Git</h2>
+                        <p>e-Okul'a giriş yaptıktan sonra bu butona basın.</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <button class="btn btn-secondary btn-lg" id="btnNavigate" onclick="navigateToGelisim()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                            <polyline points="15 3 21 3 21 9"/>
+                            <line x1="10" y1="14" x2="21" y2="3"/>
+                        </svg>
+                        Gelişim Sayfasına Git
+                    </button>
+                </div>
+            </section>
+
+            <!-- Step 3: Select Sınıf → Şube → Ders -->
+            <section class="card step-card hidden" id="step3Card">
+                <div class="card-header">
+                    <div class="card-icon select-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Sınıf, Şube ve Ders Seçimi</h2>
+                        <p>Sırasıyla sınıf, şube ve ders seçip Listele butonuna basın.</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="subeSelect">Sınıf / Şube</label>
+                            <select id="subeSelect" class="form-select" onchange="onSubeChanged()">
+                                <option value="">Yükleniyor...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dersSelect">Ders</label>
+                            <select id="dersSelect" class="form-select" disabled>
+                                <option value="">Önce şube seçin</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button class="btn btn-accent btn-lg" id="btnListele" onclick="selectDersAndListele()" disabled>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="8" y1="6" x2="21" y2="6"/>
+                            <line x1="8" y1="12" x2="21" y2="12"/>
+                            <line x1="8" y1="18" x2="21" y2="18"/>
+                            <line x1="3" y1="6" x2="3.01" y2="6"/>
+                            <line x1="3" y1="12" x2="3.01" y2="12"/>
+                            <line x1="3" y1="18" x2="3.01" y2="18"/>
+                        </svg>
+                        Listele
+                    </button>
+                </div>
+            </section>
+
+            <!-- Step 4: Kazanım Selection -->
+            <section class="card step-card hidden" id="step4Card">
+                <div class="card-header">
+                    <div class="card-icon kazanim-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 11l3 3L22 4"/>
+                            <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>Kazanım Seçimi</h2>
+                        <p>Her kazanım için uygulanacak düzeyi seçin.</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    
+                    <div class="form-group text-start mb-4" style="background: var(--bg-color); padding: 15px; border-radius: var(--border-radius); border: 1px solid var(--border-color);">
+                        <label for="targetDonemSelect" style="font-weight: 500; display: block; margin-bottom: 8px;">Değerlendirilecek Dönem</label>
+                        <select id="targetDonemSelect" class="form-select" onchange="changeKazanimDonem()">
+                            <option value="1">1. Dönem</option>
+                            <option value="2" selected>2. Dönem</option>
+                        </select>
+                        <small style="color: var(--text-secondary); display: block; margin-top: 5px;">Kazanımların hangi döneme ait olduğunu seçin.</small>
+                    </div>
+
+                    <div class="form-group text-start mb-4" style="background: var(--bg-color); padding: 15px; border-radius: var(--border-radius); border: 1px solid var(--border-color);">
+                        <label style="font-weight: 500; display: block; margin-bottom: 8px;">Kazanım Seçim Modu</label>
+                        <div style="display: flex; gap: 20px; align-items: center;">
+                            <label style="cursor: pointer;">
+                                <input type="radio" name="selectionMode" value="manual" checked onchange="toggleMode()">
+                                <span>Ben Ayarlayacağım</span>
+                            </label>
+                            <label style="cursor: pointer;">
+                                <input type="radio" name="selectionMode" value="random" onchange="toggleMode()">
+                                <span>Otomatik Rastgele Seçim (Bot Algılamasını Önler)</span>
+                            </label>
+                        </div>
+                        <small style="color: var(--text-secondary); display: block; margin-top: 5px;" id="modeDescriptionText">Sizin belirlediğiniz puanlar tüm öğrencilere aynen işlenir.</small>
+                    </div>
+
+                    <div class="student-info-bar" id="studentInfoBar">
+                        <span class="student-count" id="studentCount">0 öğrenci</span>
+                        <span class="separator">•</span>
+                        <span id="kazanimCount">0 kazanım</span>
+                    </div>
+                    <div id="kazanimContainer" class="kazanim-container">
+                        <!-- Kazanım cards will be injected here -->
+                    </div>
+
+                    <button class="btn btn-success btn-lg w-100 mt-4" id="btnApplyAll" onclick="applyAll()">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                        Tüm Öğrencilere Uygula
+                    </button>
+                </div>
+            </section>
+
+            <!-- Step 5: Progress -->
+            <section class="card step-card hidden" id="step5Card">
+                <div class="card-header">
+                    <div class="card-icon progress-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+                        </svg>
+                    </div>
+                    <div>
+                        <h2>İşlem Durumu</h2>
+                        <p>Toplu uygulama ilerlemesi</p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="progress-section">
+                        <div class="progress-info">
+                            <span id="progressText">Başlatılıyor...</span>
+                            <span id="progressPercent">0%</span>
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar" id="progressBar"></div>
+                        </div>
+                        <div class="progress-detail" id="progressDetail">0 / 0 öğrenci</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Logs Panel -->
+            <section class="card logs-card">
+                <div class="card-header logs-header" onclick="toggleLogs()">
+                    <div class="card-icon log-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="16" y1="13" x2="8" y2="13"/>
+                            <line x1="16" y1="17" x2="8" y2="17"/>
+                        </svg>
+                    </div>
+                    <h2>İşlem Günlüğü</h2>
+                    <svg class="chevron" id="logsChevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </div>
+                <div class="card-body logs-body collapsed" id="logsBody">
+                    <div class="logs-container" id="logsContainer">
+                        <div class="log-entry log-info">Uygulama başlatıldı. Tarayıcıyı açarak başlayın.</div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>

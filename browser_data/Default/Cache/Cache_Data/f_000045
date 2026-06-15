@@ -1,0 +1,760 @@
+﻿//var veri =this.app.$data
+function ReturnRecord(msg, funcparameter) {
+    this.app.ReturnRecord(msg, funcparameter);
+}
+function AlanKontrolveKayit() {
+    this.app.AlanKontrolveKayit();
+}
+function PageCommonFunction(CommonParameter, funcparameter) {
+    this.app.PageCommonFunction(CommonParameter, funcparameter);
+}
+function showPrint() {
+    var popUp = window.open("/fr/eokulreport.aspx", "PopupWindow", "scrollbars=yes,resizable=yes");
+    if (popUp == null || typeof (popUp) == 'undefined') {
+        sgMsgbox("e", "Hata", 'Tarayıcınıza Açılır Pencere(pop-up) engelleyicisi var. Raporları görüntülemek için açılır pencerelere izin veriniz', true, true, false, "TL", 5);
+    }
+    else {
+        popUp.focus();
+    }
+
+}
+var app = new Vue({
+    el: "#chartdiv",
+    data: {
+        showForm: false,
+        hata: { baslik: null, hatamesaji: null, hatatipi: "success" },
+        formkontrol: {
+            subeler: { id: 'cmbSubeler', type: 'number', value: -1, zorunlu: true, validationgroup: 1, kontrolDegeri: -1, defaultValue: -1, label: 'Sınıf/Şube', ekmesaj: ' seçiniz.', valid: true, hatamesaji: '' },
+            dersler: { id: 'cmbDersler', type: 'number', value: -1, zorunlu: true, validationgroup: 1, kontrolDegeri: -1, defaultValue: -1, label: 'Ders', ekmesaj: ' seçiniz.', valid: true, hatamesaji: '' },
+        },
+
+        getData: null,
+        degisimSayisi: 0,
+        first_data_watch: '',
+        notkilitli: false,
+        ifadegoster: false,
+        ogrenciData: null, //öğrenci listesi
+        TemaifadeOneriData: null, //öğrenci listesi
+        editItem: null,
+        sendData: null,
+        ogrencifotografi: null,
+        first_data: '',
+        ogrenci_durum: null,
+        ogrenci_grafik: null,
+        grafik: null,
+        firstIncomplete: null,
+        degerlendirme_basliklari: null,
+        subeozeti: null,
+        yetkili: false,
+
+        showModal: false,
+        showModaldisplay: "display:none; background: rgba(0, 0, 0, 0.5)",
+        selectedMadde: "",
+        selectedOptions: [],
+        selectedScore: null,  // Kullanıcının seçtiği puanı tutar
+        selectedSubIndex: null, // Hangi satırdan geldiğini anlamak için
+        selectedIndex: null,
+        selectedMadde: null,  // Seçilen maddeyi tutacak
+        selectedMaddeId: null,  // Seçilen maddeyi tutacak
+        modalindex: null,
+        selectedSinif: null,
+        selectedDonem: null,
+        selectedSiniforjinal: null,
+        selectedDonemorjinal: null,
+        selectendonemsecildimi: false,
+        siniflar: [],
+        donemler: [],
+
+        graph_options: {
+            chart: {
+                height: 275,
+                type: 'donut',
+            },
+            dataLabels: {
+                enabled: false,
+            },
+            series: [1, 1, 1, 1],
+            colors: ["#4680ff", "#ffba57", "#00acc1", "#0e9e4a"],
+            labels: ["", "", "", ""],
+            legend: {
+                show: true,
+                position: 'bottom',
+            }
+        }
+    },
+    watch: {
+        "formkontrol.subeler.value": {
+            handler(val) {
+                if (val != -1) {
+                   
+                    this.ogrenciData = null;
+                    this.formkontrol.dersler.value = -1;
+                    this.selectedSinif = null;
+                    this.selectedDonem = null;
+                    this.TemaifadeOneriData = null;
+                    this.selectedSiniforjinal = null;
+                    this.selectedDonemorjinal = null;
+                    this.selectendonemsecildim = null;
+                    this.DersDoldur();
+                }
+            },
+            deep: true
+        },
+    
+        "TemaifadeOneriData": {
+            handler(val) {
+                //console.log("Değişiklik algılandı:", val);
+
+            },
+            deep: true
+        },
+        "getData": {
+            handler(val) {
+                if (this.notkilitli) {
+                    sgMsgbox("w", "Uyarı", "Ders değerlendirme girişi okul idaresi tarafından kapatılmıştır. Kaydetme Yapamazsınız", true, true, false, "TF", 5);
+                }
+                if (this.getData) {
+                    this.ogrenci_durum = this.getData.map(tema => {
+                        const elemanSayisi = tema.MADDELER.length;
+                        const secilenSayisi = tema.MADDELER.filter(madde => madde.MADDE_PUAN !== 0).length;
+
+                        return {
+                            TEMAADI: tema.TEMAADI,
+                            TEMA_ID: tema.TEMA_ID,
+                            ELEMAN_sAYISI: elemanSayisi,
+                            SECILENSAYISI: secilenSayisi,
+                            TAMAMLANMA: Math.floor((secilenSayisi / elemanSayisi) * 100)
+                        };
+                    });
+
+                    if (!this.firstIncomplete) {
+                        if (this.getData.length > 1)
+                            this.firstIncomplete = this.ogrenci_durum.find(item => item.TAMAMLANMA < 100) || 0;
+                        else
+                            this.firstIncomplete = this.ogrenci_durum[0];
+                    }
+                }
+                var self = this;
+                this.ogrenci_grafik = {
+                    "gelistirilmeli": 0,
+                    "yeterli": 0,
+                    "iyi": 0,
+                    "cok_iyi": 0
+                }
+                if (this.getData) {
+                    this.getData.forEach(tema => {
+                        tema.MADDELER.forEach(madde => {
+                            switch (madde.MADDE_PUAN) {
+                                case 1:
+                                    self.ogrenci_grafik.gelistirilmeli++;
+                                    break;
+                                case 2:
+                                    self.ogrenci_grafik.yeterli++;
+                                    break;
+                                case 3:
+                                    self.ogrenci_grafik.iyi++;
+                                    break;
+                                case 4:
+                                    self.ogrenci_grafik.cok_iyi++;
+                                    break;
+                            }
+                        });
+                    });
+                    let sayac = 0;
+                    let originalData = JSON.parse(this.first_data_watch)
+
+                    this.getData.forEach((tema, temaIndex) => {
+
+                        tema.MADDELER.forEach((madde, maddeIndex) => {
+
+                            const eskiPuan =
+                                originalData[temaIndex]
+                                    ?.MADDELER[maddeIndex]
+                                    ?.MADDE_PUAN;
+
+                            if (madde.MADDE_PUAN !== eskiPuan) {
+                                sayac++;
+                            }
+
+                        });
+
+                    });
+
+                    this.degisimSayisi = sayac;
+                    if (this.degisimSayisi > 1) {
+                        AjaxGonderParametresiz("-1", "SetDataLog", "ReturnSetDataLog", "xml");
+                        window.location.reload();
+                    }
+                    else
+                        this.first_data_watch = JSON.stringify(this.getData);
+
+                }
+                if (this.grafik)
+                    this.grafik.updateSeries([self.ogrenci_grafik.gelistirilmeli, self.ogrenci_grafik.yeterli, self.ogrenci_grafik.iyi, self.ogrenci_grafik.cok_iyi]);
+
+
+                
+            },
+            deep: true
+        }
+      
+    },
+
+    methods: {
+        onSinifChanged(event) {
+            console.log("Sınıf değişti:", this.selectedSinif);
+
+          
+            console.log("varsayılan donem:", this.selectedDonemorjinal);
+            console.log("varsayılan sinif:", this.selectedSiniforjinal);
+            debugger;
+            // this.selectedDonem = alDonem % 2 === 0 ? 1 : 2;
+            if (this.selectedSinif === this.selectedSiniforjinal && (this.selectedDonemorjinal % 2 === 0) && this.selectedDonem == 2) {
+                sgMsgbox("e", "Hata", "İleri bir dönem için işlem yapılamaz.", true, true, false, "TF", 5);
+                this.selectedSinif = this.selectedSiniforjinal;
+                this.selectedDonem = (this.selectedDonemorjinal % 2)+1  ;
+            }
+            
+            console.log("item:", this.editItem);
+
+            this.OgrenciSec(this.editItem);
+            this.selectendonemsecildimi = true;
+
+            // this.selectedSinif zaten güncel
+        },
+    
+
+        // Modalı açma fonksiyonu
+        openModal(madde, options, index, subIndex, maddeId) {
+            
+            if (madde!="-1") {
+                this.selectedMadde = madde;
+                this.selectedOptions = options;
+                this.selectedScore = this.getData[index].MADDELER[subIndex].MADDE_PUAN;
+                this.selectedIndex = index;
+                this.selectedSubIndex = subIndex;
+                this.showModal = true;
+                this.showModaldisplay = "display: block; background: rgba(0, 0, 0, 0.5)";
+                this.selectedMaddeId = maddeId;
+                this.modalindex = index;
+            } 
+            this.ifadegoster = false;
+            
+        },
+        addNewItem(index) {
+        
+            if (Array.isArray(this.getData)) {
+
+                var maddeno = this.getData[index].MADDELER.length+1;
+                const newItem = {
+                    "MADDE_NO": maddeno,
+                    "MADDE": "Yeni madde",
+                    "MADDE_PUAN": -1,
+                    "MADDE_ID": -1,
+                    "MADDE_BECERI_ID": -1,
+                    "MADDE_IFADE": null,
+                    "BECERI": null,
+                    "DEGERLENDIRME": [
+                        { "MADDE_BASLIK": "Geliştirilmeli", "MADDE_TEXT": "", "PUAN_DEGERI": 1 },
+                        { "MADDE_BASLIK": "Yeterli", "MADDE_TEXT": "", "PUAN_DEGERI": 2 },
+                        { "MADDE_BASLIK": "İyi", "MADDE_TEXT": "", "PUAN_DEGERI": 3 },
+                        { "MADDE_BASLIK": "Çok İyi", "MADDE_TEXT": "", "PUAN_DEGERI": 4 }
+                    ]
+                };
+                //debugger;
+                // Check if the index exists in getData and if MADDELER is defined
+               
+
+                // Check if MADDELER is an array and push the new item, or initialize it if undefined
+                if (Array.isArray(this.getData[index].MADDELER)) {
+                    this.$set(this.getData[index], 'MADDELER', [...this.getData[index].MADDELER, newItem]);
+                } else {
+                    // Initialize MADDELER if it's not an array
+                    this.$set(this.getData[index], 'MADDELER', [newItem]);
+                }
+
+                // Show modal
+                //this.showModal = true;
+            } else {
+                console.error("getData is not an array or invalid index");
+            }
+            //this.showModal = true;
+        },
+
+        openModal2( index) {
+           
+            
+            this.modalindex = index;
+            this.selectedIndex = index;
+        },
+
+        // Sonraki maddeyi modalda gösterme
+        nextItem() {
+            // Eğer son öğeye gelmediysek
+            if (this.selectedSubIndex < this.getData[this.selectedIndex].MADDELER.length - 1) {
+                this.selectedSubIndex++;  // Sonraki öğeye geç
+                this.updateModalWithNewItem(); // Modal içeriğini güncelle
+            }
+            this.ifadegoster = false;
+        },
+
+        // Önceki maddeyi modalda gösterme
+        previousItem() {
+            // Eğer ilk öğeye gelmediysek
+            if (this.selectedSubIndex > 0) {
+                this.selectedSubIndex--;  // Önceki öğeye geç
+                this.updateModalWithNewItem(); // Modal içeriğini güncelle
+            }
+            this.ifadegoster = false;
+        },
+
+        // Modal içeriğini güncelleme
+        updateModalWithNewItem() {
+         
+            const currentItem = this.getData[this.selectedIndex].MADDELER[this.selectedSubIndex];
+            
+           // this.selectedSubIndex = selectedSubIndex;
+
+            this.selectedMadde = currentItem.MADDE;
+            this.selectedOptions = currentItem.DEGERLENDIRME;
+            this.selectedScore = currentItem.MADDE_PUAN;
+            this.selectedMaddeId = currentItem.MADDE_ID;
+            
+        },
+
+        //saveScore() {
+        //    if (this.selectedScore !== null) {
+        //        // Tabloyu güncelle
+        //        this.getData[this.selectedIndex].MADDELER[this.selectedSubIndex].MADDE_PUAN = this.selectedScore;
+        //       // this.showModal = false;
+        //    }
+        //},
+        //saveMadde() {
+           
+        //    var madde = this.getData[this.selectedIndex].MADDELER[this.selectedSubIndex];
+        //    // alert(madde.MADDE_ID + " Madde : " + madde.MADDE);
+        //    $("#chartdiv").LoadingOverlay("show");
+        //    var Keyler = ["MADDE_ID", "MADDE", "jsondata", "TEMA_ID", "DERS_KODU"];
+        //    var Degerler = [madde.MADDE_ID, madde.MADDE, (JSON.stringify(madde)), this.getData[this.selectedIndex].TEMA_ID, this.getData[this.selectedIndex].DERS_KODU];
+        //    AjaxGonder(Keyler, Degerler, "-1", "SetMarifMaddeKayit", "ReturnSetMarifMaddeKayit", "json");
+             
+        //},
+        //TemaifadeveOneriCek() {
+        //    //debugger;
+        //    var madde = this.getData[this.selectedIndex].MADDELER[this.selectedSubIndex];
+        //    // alert(madde.MADDE_ID + " Madde : " + madde.MADDE);
+        //    $("#chartdiv").LoadingOverlay("show");
+        //    var Keyler = ["MADDE_ID", "MADDE", "jsondata", "TEMA_ID", "DERS_KODU"];
+        //    var Degerler = [madde.MADDE_ID, madde.MADDE, (JSON.stringify(madde)), this.getData[this.selectedIndex].TEMA_ID, this.getData[this.selectedIndex].DERS_KODU];
+        //    AjaxGonder(Keyler, Degerler, "-1", "GetMarifTemaAciklamaOneriCek", "ReturnGetMarifTemaAciklamaOneriCek", "json");
+
+        //},
+
+        //saveifadeOneri() {
+        //    //debugger;
+        //    //var madde = this.TemaifadeOneriData;
+        //    const jsondata = JSON.stringify(this.TemaifadeOneriData);
+        //    const Keyler = ["jsondata"];
+        //    const Degerler = [jsondata];
+
+        //    //var Keyler = ["MADDE_ID", "MADDE", "jsondata", "TEMA_ID", "DERS_KODU"];
+        //    //var Degerler = [madde.MADDE_ID, madde.MADDE, (JSON.stringify(madde)), this.getData[this.selectedIndex].TEMA_ID, this.getData[this.selectedIndex].DERS_KODU];
+        //    // AjaxGonder(Keyler, Degerler, "-1", "SetMarifMaddeKayit", "ReturnSetMarifMaddeKayit", "json");
+        //    AjaxGonder(
+        //        Keyler,
+        //        Degerler,
+        //        "-1",
+        //        "setMarifTemaAciklamaOnerikaydet",
+        //        "ReturnSetMarifMaddeKayit",
+        //        "json"
+        //    );
+        //},
+
+        modalKapat() {
+            this.showModal = false;
+            this.showModaldisplay = "display: none; background: rgba(0, 0, 0, 0.5)";
+        },
+        formatText(text) {
+            return text.replace(/\n/g, "<br>");
+        },
+        reverseFormatText(htmlText) {
+            return htmlText.replace(/<br\s*\/?>/g, "\n");
+        },
+
+        ReturnRecord: function (msg, funcparameter) {
+            InitializeTimer();
+            this.hata.hatamesaji = null;
+            var readList = msg.d;
+            if (typeof funcparameter === 'object') {
+                $("#chartdiv").LoadingOverlay("hide", true);
+                var self = this;
+
+                if (funcparameter.nesneadi == this.formkontrol.subeler.id) {
+                    if (readList.length == 1)
+                        this.formkontrol.subeler.value = readList[0].eIndex;
+                    ComboDoldur((new Object({ nesneadi: funcparameter.nesneadi, veri: readList, cmbType: "select2", bosekle: true, bosekleTekse: true, ilkeleman: "Sınıf Seçiniz" })));
+                    LutfenBekleyinizButon("btnListele", false, " Listele ");
+                    $("#" + funcparameter.nesneadi).select2().change(function (e) {
+                        self.formkontrol.subeler.value = this.value;
+                        self.ogrenciData = null;
+                        self.TemaifadeOneriData = null;
+                        self.editItem = null;
+                        self.showForm = false;
+                        self.getData = null;
+                    });
+                }
+                else if (funcparameter.nesneadi == this.formkontrol.dersler.id) {
+                    if (readList.length == 1)
+                        this.formkontrol.dersler.value = readList[0].eIndex;
+                    ComboDoldur((new Object({ nesneadi: funcparameter.nesneadi, veri: readList, cmbType: "select2", bosekle: true, bosekleTekse: true, ilkeleman: "Ders Seçiniz" })));
+                    LutfenBekleyinizButon("btnListele", false, " Listele ");
+                    $("#" + funcparameter.nesneadi).select2().change(function (e) {
+                        self.formkontrol.dersler.value = this.value;
+                        self.ogrenciData = null;
+                        self.editItem = null;
+                        self.TemaifadeOneriData = null;
+                        self.showForm = false;
+                        self.getData = null;
+                    });
+                }
+
+            }
+            else {
+                if (readList.error) {
+                    if (readList.redirect) {
+                        GotoPage(readList.url);
+                    }
+                    else {
+                        $("#chartdiv").LoadingOverlay("hide", true);
+                        this.hata.hatamesaji = readList.message;
+                        this.hata.baslik = "Hata";
+                        this.hata.hatatipi = 'danger';
+                        this.showList = false;
+                        if (readList.takvim == false) {
+                            this.ogrenciData = null;
+                            this.TemaifadeOneriData = null;
+                            this.showForm = false;
+                            this.editItem = null;
+                            $("#IOMToolbarActive1_btnKaydet").attr("disabled", "disabled").removeAttr("onclick");
+                        }
+                    }
+                }
+                else {
+                    $("#chartdiv").LoadingOverlay("hide", true);
+                    if (funcparameter == "ReturnGetPageControllerSube") {
+                        if (readList.success) {
+                            this.SubeDoldur();
+                            this.yetkili = readList.read_only;
+                        }
+                        else
+                            GotoPage('/main.aspx');
+                    }
+                    else if (funcparameter == "ReturnGetOgrenciListesi") {
+                        //$("#chartdiv").LoadingOverlay("hide", true);
+                        this.ogrenciData = readList;
+                        if (this.editItem)
+                            butonSec("#btnOpen_" + this.editItem.OgrenciId, false);
+                        delete this.ogrenciData['__type'];
+                        if (!this.ogrenciData) {
+                            this.hata.hatamesaji = "Seçilen Şubede Öğrenci Bulunamadı";
+                            this.hata.baslik = "Hata";
+                            this.hata.hatatipi = 'danger';
+                        }
+                        //else {
+                        //    Vue.nextTick(() => {
+                        //        this.OgrenciSec(this.ogrenciData[01]);
+                        //    });
+
+                        //}
+                    }
+                    else if (funcparameter == "ReturnGetMarifTemaAciklamaOneriCek") {
+                        //$("#chartdiv").LoadingOverlay("hide", true);
+                        //debugger;
+                        this.TemaifadeOneriData = JSON.parse(readList.message);;
+
+                        delete this.TemaifadeOneriData['__type'];
+                        if (!this.TemaifadeOneriData) {
+                            this.hata.hatamesaji = "Seçilen Şubede Öğrenci Bulunamadı";
+                            this.hata.baslik = "Hata";
+                            this.hata.hatatipi = 'danger';
+                        } else {
+                            this.ifadegoster = true;
+
+                        }
+                        //else {
+                        //    Vue.nextTick(() => {
+                        //        this.OgrenciSec(this.ogrenciData[01]);
+                        //    });
+
+                        //}
+                    }
+                    else if (funcparameter == "ReturnGetOgrenciBilgileri") {
+                        //$("#chartdiv").LoadingOverlay("hide", true);
+                       
+                        
+                        this.notkilitli = false;
+                        this.firstIncomplete = null;
+                        const fectData = JSON.parse(JSON.parse(JSON.stringify(readList.message)));
+                        fectData.ogrenciler
+                        this.getData = fectData.ogrenciler;
+                        
+                      
+                        this.siniflar = this.getData[0].SINIFNO.map(item => item.SINIFNO).sort((a, b) => b - a);;
+                        this.donemler = this.getData[0].SINIFDONEM.map(item => item.DONEM);
+
+                        this.selectedSinif = this.getData[0].SINIFNO[0]?.BULUNDUGUSINIFNO;
+                        alDonem = this.getData[0].SINIFDONEM[0].BULUNDUGUDONEM;
+
+                        this.selectedSiniforjinal = this.getData[0].SINIFNO[0]?.BULUNDUGUSINIFNO;
+                        this.selectedDonemorjinal = this.getData[0].SINIFDONEM[0].BULUNDUGUDONEM;
+
+                        debugger;
+                        if (this.selectendonemsecildimi == false) {
+                            this.selectedDonem = alDonem % 2 === 0 ? 1 : 2;
+
+                           
+                        }
+                        //else {
+                        //    if (this.selectedDonem != (this.selectedDonemorjinal % 2 === 0 ? 1 : 2) && this.selectedSinif === this.selectedSiniforjinal) {
+                        //        this.Aktiflik(-1, -1);
+                        //    }
+                            
+                        //}
+
+                        
+
+                        this.ogrencifotografi = fectData.fotograf.data;
+                        if (this.getData) {
+                            this.degerlendirme_basliklari = this.getData[0].MADDELER[0].DEGERLENDIRME
+                                .sort((a, b) => a.PUAN_DEGERI - b.PUAN_DEGERI)
+                                .map(item => item.MADDE_BASLIK);
+                            this.graph_options.labels = this.degerlendirme_basliklari;
+                        }
+                        //this.grafik = new ApexCharts(
+                        //    document.querySelector("#ogrGrafik"),
+                        //    this.graph_options
+                        //);
+                        //this.grafik.render();
+                        delete this.getData['__type'];
+                        this.first_data = JSON.stringify(this.getData)
+                        this.first_data_watch = JSON.stringify(this.getData)
+                        if (readList.takvim == false) {
+                            this.hata.hatamesaji = readList.output;
+                            this.hata.baslik = "Hata";
+                            this.hata.hatatipi = 'danger';
+                            this.notkilitli = true;
+                        }
+                    }
+                    else if (funcparameter == "ReturnGetMaarifSubeOzeti") {
+                        app2.ReturnRecord(msg, funcparameter);
+                    }
+                    else if (funcparameter == "ReturnKaydet") {
+                        if (readList.error == false) {
+                            sgMsgbox("s", "Bilgi", "İşlem Tamamlandı", true, true, false, "TF", 5);
+                            this.first_data = JSON.stringify(this.getData)
+                            //this.firstIncomplete = null;
+                        }
+                        else {
+                            sgMsgbox("e", "Hata", readList.message, true, true, false, "TF", 5);
+                        }
+
+                    }
+                    else if (funcparameter == "ReturnSetMarifMaddeKayit") {
+                        if (readList.error == false) {
+                           
+                            sgMsgbox("s", "Bilgi", "İşlem Tamamlandı", true, true, false, "TF", 5);
+                           // this.first_data = JSON.stringify(this.getData)
+                            //this.firstIncomplete = null;
+                        }
+                        else {
+                            sgMsgbox("e", "Hata", readList.message, true, true, false, "TF", 5);
+                        }
+
+                    }
+                    else if (funcparameter == "ReturnRaporYazdir") {
+                        if (readList.error == false) {  
+                            showPrint();
+                        }
+                        else {
+                            sgMsgbox("e", "Hata", readList.message, true, true, false, "TF", 5);
+                        }
+
+                    }
+                }
+            }
+        },
+        PageCommonFunction: function (CommonParameter, funcparameter) {
+            InitializeTimer();
+            if (CommonParameter == "ModalPopupConfirm") {
+                var islemparametresi = $('#hdnModalPopupConfirm').val();
+                $('#hdnModalPopupConfirm').val("-1");
+                if (funcparameter == "Yes") {
+                    if (islemparametresi == "Kaydet") {
+                        var self = this;
+                        this.sendData = this.getData.flatMap(tema =>
+                            tema.MADDELER.filter(madde => madde.MADDE_PUAN !== 0).map(madde => ({
+                                temaid: tema.TEMA_ID,
+                                maddeid: madde.MADDE_ID,
+                                maddepuan: madde.MADDE_PUAN
+                            }))
+                        );
+                        var secilenDonem = (this.selectedDonem != null && this.selectedDonem !== '') ? this.selectedDonem : (this.selectedDonemorjinal % 2 === 0 ? 1 : 2);
+
+                        var Keyler = ["ogrenciId", "subekodu", "derskodu", "jsondata", "sinifno", "secilendonem", "aktifsinif"];
+                        var Degerler = [this.editItem.OgrenciId, this.formkontrol.subeler.value, this.formkontrol.dersler.value, JSON.stringify(this.sendData), this.selectedSinif, secilenDonem, this.selectedSiniforjinal];
+                        AjaxGonder(Keyler, Degerler, "-1", "Kaydet", "ReturnKaydet", "json");
+                    }
+                    else if (islemparametresi == "GelisimRaporu") {
+                        var secilenDonem = (this.selectedDonem != null && this.selectedDonem !== '') ? this.selectedDonem : (this.selectedDonemorjinal % 2 === 0 ? 1 : 2);
+
+                        var Keyler = ["ogrenciId", "subekodu", "derskodu", "jsondata", "sinifno", "secilendonem", "aktifsinif"];
+                        var Degerler = [this.editItem.OgrenciId, this.formkontrol.subeler.value, "-1", "-1", this.selectedSinif, secilenDonem, this.selectedSiniforjinal];
+                        AjaxGonder(Keyler, Degerler, "-1", "Kaydet", "ReturnKaydet", "json");
+                    }
+                }
+                else if (funcparameter == "No") {
+                    if (islemparametresi == "Kaydet")
+                        sgMsgbox("i", "Bilgi", "İşlem İptal Edildi", true, true, false, "TF", 5);
+                }
+            }
+
+        },
+
+        Listele: function (form_validation) {
+            var hatamesaji = "";
+            this.hata.hatamesaji = "";
+            hatamesaji = validation(this.formkontrol);
+            if (hatamesaji != "") {
+                sgMsgbox("e", "Hata", hatamesaji, true, true, false, "TF", 5);
+            }
+            else {
+                $("#chartdiv").LoadingOverlay("show");
+                var Keyler = ["subekodu"];
+                var Degerler = [this.formkontrol.subeler.value, kademe];
+                AjaxGonder(Keyler, Degerler, servispage, "GetSinifSubeyeGoreOgrenciListNot", "ReturnGetOgrenciListesi", "json");
+            }
+        },
+
+        RaporYazdir: function (reportformat,ogrno=-1) {
+            var hatamesaji = "";
+            this.hata.hatamesaji = "";
+            if (this.formkontrol.subeler.value==-1) {
+                sgMsgbox("e", "Hata", "Sınıf/Şube Seçiniz", true, true, false, "TF", 5);
+            }
+            else {
+              
+                $("#chartdiv").LoadingOverlay("show");
+                var Keyler = ["reportformat","subekodu","ogrno"];
+                var Degerler = [reportformat, this.formkontrol.subeler.value, ogrno];
+                AjaxGonder(Keyler, Degerler, "-1", "RaporYazdir", "ReturnRaporYazdir", "json");
+            }
+        },
+        formInit: function () {
+            $("#chartdiv").LoadingOverlay("show");
+            this.SayfaYukle();
+        },
+        SayfaYukle: function () {
+            AjaxGonderParametresiz("-1", "GetPageController", "ReturnGetPageControllerSube", "json");
+        },
+        SubeDoldur: function () {
+            LutfenBekleyinizButon("btnListele", true, "Listele");
+            $("#chartdiv").LoadingOverlay("show");
+            AjaxGonderParametresiz(servispage, "SinifSubeListesiMaarif", new Object({ nesneadi: this.formkontrol.subeler.id, ReturnType: "ComboDoldurSelect2" }), "json");
+
+        },
+        DersDoldur: function () {
+            LutfenBekleyinizButon("btnListele", true, "Listele");
+            $("#chartdiv").LoadingOverlay("show");
+            var Keyler = ["subekodu"];
+            var Degerler = [this.formkontrol.subeler.value];
+            AjaxGonder(Keyler, Degerler, servispage, "GetSinifaveOgretmeneGoreDersGetirMaarif", new Object({ nesneadi: this.formkontrol.dersler.id, ReturnType: "ComboDoldurSelect2" }), "json");
+
+        },
+        AlanKontrolveKayit: function () {
+            InitializeTimer();
+            var hatamesaji = "";
+            this.hata.hatamesaji = "";
+            if (this.notkilitli ) {
+                sgMsgbox("w", "Uyarı", "Ders değerlendirme girişi okul idaresi tarafından kapatılmıştır.", true, true, false, "TF", 5);
+            }
+            else {
+                if (JSON.stringify(this.getData) == this.first_data) {
+                    sgMsgbox("w", "Uyarı", "Hiçbir değişiklik yapmadınız", true, true, false, "TF", 5);
+                }
+                else {
+                    if (hatamesaji == "") {
+                        AbleModalConfirmByValue("Kaydet", "Kayıt işlemi Tamamlanacak. Devam etmek istiyor musunuz ?", "Evet", "success", "Hayır", "secondary", "Kaydet");
+                    }
+                    else
+                        sgMsgbox("e", "Hata", hatamesaji, true, true, false, "TF", 5);
+                }
+            }
+        },
+        OgrenciSecOzet: function (item) {
+            var hatamesaji = "";
+            this.hata.hatamesaji = "";
+            hatamesaji = validation(this.formkontrol);
+            if (hatamesaji != "") {
+                sgMsgbox("e", "Hata", hatamesaji, true, true, false, "TF", 5);
+            }
+            else {
+                if (!this.ogrenciData) {
+                    sgMsgbox("e", "Hata", "Öğrencileri Listeleyiniz", true, true, false, "TF", 5);
+                }
+                else {
+                    $('#subeozeti').modal('hide');
+                    this.OgrenciSec(this.ogrenciData.find(p => p.OgrenciId == item.OGRENCI_ID));
+                }
+            }
+        },
+        OgrenciSec: function (item) {
+            this.getData = null;
+            this.showForm = false;
+            if (this.editItem)
+                butonSec("#btnOpen_" + this.editItem.OgrenciId, false);
+            butonSec("#btnOpen_" + item.OgrenciId, true);
+            $("#chartdiv").LoadingOverlay("show");
+            this.editItem = item;
+            debugger;
+           
+            var Keyler = ["tckimlikno", "subekodu", "derskodu", "sinifno", "secilendonem"];
+            var Degerler = [item.OgrenciId, this.formkontrol.subeler.value, this.formkontrol.dersler.value, this.selectedSinif, this.selectedDonem];
+            AjaxGonder(Keyler, Degerler, "-1", "GetOgrenciBilgileri", "ReturnGetOgrenciBilgileri", "json");
+        },
+        GelisimRaporu: function () {
+            if (this.editItem)
+                AbleModalConfirmByValue("Kaydet", "Öğrenci Gelişim Raporu tekrar  oluşturulacak. Devam etmek istiyor musunuz?", "Evet", "success", "Hayır", "secondary", "GelisimRaporu");
+            else
+                sgMsgbox("e", "Hata", "Öğrenci Seçiniz", true, true, false, "TF", 5);
+        },
+        Aktiflik: function (index, subindex) {
+            
+            if (this.selectedDonem != (this.selectedDonemorjinal % 2 === 0 ? 1 : 2) && this.selectedSinif === this.selectedSiniforjinal) {
+                debugger;
+                var data = this.getData[index].MADDELER[subindex].MADDE_PUAN;
+                debugger;
+                if (data!=0) {
+                    return false;
+                }
+               
+            }
+            //if (subindex == 0)
+            return true;
+            //else 
+            //{
+            //    return (this.getData[index].MADDELER[subindex -1].MADDE_PUAN!=0)
+            //}
+
+        },
+
+    },
+    //combo şube listeleme
+    created: function () {
+        SayfaDuzenle("Gelişim Düzeyleri Girişi", "IOK10016");
+        this.formInit();
+
+    },
+    mounted() {
+
+    },
+});
