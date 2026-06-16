@@ -484,15 +484,42 @@ async function applyAll() {
         showToast('✅ Toplu uygulama tamamlandı!', 'success');
         addLog('Toplu uygulama başarıyla tamamlandı!', 'success');
         setStatus('connected', 'Tamamlandı');
+        
+        document.getElementById('resetAppContainer').style.display = 'block';
 
     } catch (e) {
         stopProgressPolling();
         addLog('Toplu uygulama hatası: ' + e.message, 'error');
         setStatus('error', 'Hata');
+        document.getElementById('resetAppContainer').style.display = 'block';
     } finally {
         btn.classList.remove('loading');
         btn.disabled = false;
     }
+}
+
+function resetApp() {
+    // Clear State
+    students = [];
+    kazanimData = null;
+    selectedSelections = {};
+    
+    // Clear UI
+    document.getElementById('kazanimContainer').innerHTML = '';
+    document.getElementById('studentCount').textContent = '0 öğrenci';
+    document.getElementById('kazanimCount').textContent = '0 kazanım';
+    
+    // Reset Progress UI
+    document.getElementById('progressText').textContent = 'Bekleniyor...';
+    document.getElementById('progressPercent').textContent = '0%';
+    document.getElementById('progressBar').style.width = '0%';
+    document.getElementById('progressDetail').textContent = '0 / 0 öğrenci';
+    
+    // Hide reset button
+    document.getElementById('resetAppContainer').style.display = 'none';
+    
+    // Transition to Step 3 and fetch classes again to ensure fresh state
+    checkLoginStatus();
 }
 
 
