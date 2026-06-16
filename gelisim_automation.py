@@ -801,20 +801,38 @@ async def apply_selections_to_all(students: list, selections: dict, target_donem
             if random_mode and kazanim_groups:
                 current_selections = {}
                 for group in kazanim_groups:
-                    valid_values = [str(opt.get("value")) for opt in group.get("options", []) if str(opt.get("value")).isdigit()]
+                    options = group.get("options", [])
+                    if not options:
+                        continue
+                    
+                    radio_name = options[0].get("name")
+                    if not radio_name:
+                        continue
+                        
+                    valid_values = [str(opt.get("value")) for opt in options if str(opt.get("value")).isdigit()]
                     if not valid_values:
                         continue
-                    # Weights: 5(50%), 4(30%), 3(15%), 2(4%), 1(1%)
+                        
+                    # Seçenekleri küçükten büyüğe sırala (en iyi not en sonda olur)
+                    valid_values.sort(key=int)
+                    
                     weights = []
-                    for v in valid_values:
-                        if v == '5': weights.append(50)
-                        elif v == '4': weights.append(30)
-                        elif v == '3': weights.append(15)
-                        elif v == '2': weights.append(4)
-                        elif v == '1': weights.append(1)
-                        else: weights.append(10)
+                    n_vals = len(valid_values)
+                    for idx in range(n_vals):
+                        dist_from_end = n_vals - 1 - idx
+                        if dist_from_end == 0:     # En iyi not (örn. 5 veya en son seçenek)
+                            weights.append(50)
+                        elif dist_from_end == 1:   # 2. en iyi not (örn. 4)
+                            weights.append(30)
+                        elif dist_from_end == 2:   # 3. en iyi not (örn. 3)
+                            weights.append(15)
+                        elif dist_from_end == 3:   # 4. en iyi not (örn. 2)
+                            weights.append(4)
+                        else:                      # Diğerleri (örn. 1)
+                            weights.append(1)
+                            
                     chosen = random.choices(valid_values, weights=weights, k=1)[0]
-                    current_selections[group["name"]] = chosen
+                    current_selections[radio_name] = chosen
 
             # Apply each selection
             for radio_name, radio_value in current_selections.items():
